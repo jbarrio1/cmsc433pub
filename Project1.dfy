@@ -35,7 +35,7 @@ Here is the stub for map:
 */
 function mapTree<A,B> (f: A -> B, t: Tree<A>): Tree<B> {
     // Replace with your implementation
-    Leaf 
+    match t { case Leaf => Leaf case Node(x,l,r) => Node (f(x),mapTree(f,l),mapTree(f,r))}
 }
 
 /* Fill in your own template for fold, with the same argument order as the OCaml code. */
