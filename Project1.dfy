@@ -64,18 +64,18 @@ predicate member<T> (m:MapSet<T>, x:T) {
 
 function size<T> (m:MapSet<T>): int {
     // Replace with your definition
-    match m { case MapSet(s) => |s|}
+    match m { case MapSet(s) => if s == map[] then 0 else 1 }
 }
 
-// function insert<T> (m:MapSet<T>, x:T): MapSet<T> {
-//     // Replace with your definition
-//     MapSet (map[])
-// }
+function insert<T> (m:MapSet<T>, x:T): MapSet<T> {
+    // Replace with your definition
+    match m { case MapSet(s) => MapSet(s[x:=true])}
+}
 
-// function delete<T> (m:MapSet<T>, x:T): MapSet<T> {
-//     // Replace with your definition
-//     MapSet (map[])
-// }
+function delete<T> (m:MapSet<T>, x:T): MapSet<T> {
+    // Replace with your definition
+    match m { case MapSet(s) => MapSet(s[x:=false])}
+}
 
 
 
