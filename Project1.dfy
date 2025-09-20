@@ -62,6 +62,7 @@ predicate member<T> (m:MapSet<T>, x:T) {
     match m { case MapSet(s) => if x in s then s[x] == true else false}
 }
 
+//coming back to this - idea is going to make a new set 
 function size<T> (m:MapSet<T>): int {
     // Replace with your definition
     match m { case MapSet(s) => if s == map[] then 0 else 1 }
@@ -88,26 +89,26 @@ function delete<T> (m:MapSet<T>, x:T): MapSet<T> {
 // // Fill in a requires clause that enables Dafny to verify
 // // method PlusOne
 
-// method PlusOne (x : int) returns (y : int)
-//     requires // TODO
-//     ensures y > 0
-// {
-//     y := x+1;
-// }
+method PlusOne (x : int) returns (y : int)
+    requires x >=0
+    ensures y > 0
+{
+    y := x+1;
+}
 
 // // Question 2 (4 points)
 // //
 // // Fill in requires clause(s) that enable(s) Dafny to verify the array bounds
 // // in method Swap (which swaps elements i and j in array a).
 
-// method Swap (a : array<int>, i : int, j : int)
-//     requires // TODO
-//     modifies a
-// {
-//     var tmp : int := a[i];
-//     a[i] := a[j];
-//     a[j] := tmp;
-// }
+method Swap (a : array<int>, i : int, j : int)
+    requires 0 <= i < a.Length && 0 <= j < a.Length // done 
+    modifies a
+{
+    var tmp : int := a[i];
+    a[i] := a[j];
+    a[j] := tmp;
+}
 
 // // Question 3 (4 points)
 // //
@@ -116,45 +117,46 @@ function delete<T> (m:MapSet<T>, x:T): MapSet<T> {
 // // the Dafny division and mod operators, respectively). By definition, the
 // // remainder must be non-negative.
 
-// method IntDiv (m : int, n : int) returns (d : int, r : int)
-//     requires n > 0
-//     ensures // TODO
-// {
-//     d := m / n;
-//     r := m % n;
-// }
+method IntDiv (m : int, n : int) returns (d : int, r : int)
+    requires n > 0
+    ensures r >= 0 // done? 
+{
+    d := m / n;
+    r := m % n;
+}
 
 // // Question 4 (4 points)
 // //
 // // Fill in requires and ensures clauses for method Abs,
 // // which computes the absolute value of x.
 
-// method Abs(x: int) returns (a: int)
-//     requires // TODO
-//     ensures // TODO
-// {
-//     if x >= 0 {
-//         a := x;
-//     } else {
-//         a := -x;
-//     }
-// }
+method Abs(x: int) returns (a: int)
+    requires true // what else could this be? 
+    ensures a >= 0// abs cannot be negative 
+{
+    if x >= 0 {
+        a := x;
+    } else {
+        a := -x;
+    }
+}
 
 // // Question 5 (4 points)
 // //
 // // Add an ensures clause for MaxSum, returning s as the sum of x and y,
 // // and m is the maximum of x and y.
 
-// method MaxSum(x: int, y: int) returns (s: int, m: int)
-//     ensures // TODO
-// {
-//     s := x + y;
-//     if x < y {
-//       m := y;
-//     } else {
-//       m := x;
-//     }
-// }
+ method MaxSum(x: int, y: int) returns (s: int, m: int)
+    ensures s == x + y // TODO
+    ensures m >=y || m>= x
+{
+    s := x + y;
+    if x < y {
+      m := y;
+    } else {
+      m := x;
+    }
+}
 
 
 
