@@ -62,10 +62,10 @@ predicate member<T> (m:MapSet<T>, x:T) {
     match m { case MapSet(s) => if x in s then s[x] == true else false}
 }
 
-// function size<T> (m:MapSet<T>): int {
-//     // Replace with your definition
-    
-// }
+function size<T> (m:MapSet<T>): int {
+    // Replace with your definition
+    match m { case MapSet(s) => |s|}
+}
 
 // function insert<T> (m:MapSet<T>, x:T): MapSet<T> {
 //     // Replace with your definition
