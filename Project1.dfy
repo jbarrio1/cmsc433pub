@@ -198,11 +198,23 @@ function findMax(s: seq<int>): int
 // // Use an approach similar to findMin and findMax to write the function and its 
 // // ensures statement. 
 
-// method Reverse(s: seq<int>) returns (r: seq<int>)
-//     ensures // TODO
-// {
-//     // FILL IN HERE
-// }
+function rhelper(s: seq<int>) : (r:seq<int>)
+requires s != [] 
+ensures |s| == |r|
+{                                     //[2]   [7,5,2] len 3 elem 1
+    if |s| == 1 then s else [s[|s|-1]] + rhelper(s[..|s|-1])
+}
+
+
+method Reverse(s: seq<int>) returns (r: seq<int>)
+    ensures |s| == |r|
+{
+    if s == [] {
+      return  s;
+    }else {
+        r := rhelper(s);
+    }
+}
 
 // // Question 3 (10 points)
 // //
