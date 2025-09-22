@@ -131,7 +131,7 @@ method IntDiv (m : int, n : int) returns (d : int, r : int)
 // // which computes the absolute value of x.
 
 method Abs(x: int) returns (a: int)
-    requires true // what else could this be? 
+    requires x is int // what else could this be? 
     ensures a >= 0// abs cannot be negative 
 {
     if x >= 0 {
@@ -169,16 +169,16 @@ method Abs(x: int) returns (a: int)
 // // These two functions return the Min and Max of a sequence. Fill in both
 // // function shells and the requires and ensures clauses that correspond to both. 
 
-// function findMin(s: seq<int>): int
-//   requires // TODO
-//   ensures // TODO
-// {
-//   if |s| == 1 then
-//     s[0]
-//   else
-//     var rest_min := findMin(s[1..]);
-//     if // TODO
-// }
+function findMin(s: seq<int>): int
+  requires s != []
+  ensures s is seq<int>
+{
+  if |s| == 1 then
+    s[0]
+  else
+    var rest_min := findMin(s[1..]);
+    if s[0] < rest_min then s[0] else rest_min
+}
 
 // function findMax(s: seq<int>): int
 //   requires // TODO
