@@ -180,16 +180,16 @@ function findMin(s: seq<int>): int
     if s[0] < rest_min then s[0] else rest_min
 }
 
-// function findMax(s: seq<int>): int
-//   requires // TODO
-//   ensures // TODO
-// {
-//   if |s| == 1 then
-//     s[0]
-//   else
-//     var rest_max := findMax(s[1..]);
-//     if // TODO
-// }
+function findMax(s: seq<int>): int
+  requires s != []
+  ensures s is seq<int>
+{
+  if |s| == 1 then
+    s[0]
+  else
+    var rest_max := findMax(s[1..]);
+    if s[0] < rest_max then rest_max else s[0]
+}
 
 
 // // Question 2 (10 points)
