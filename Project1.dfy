@@ -245,42 +245,56 @@ method SeqToMap(s: seq<int>) returns (m: map<int, int>)
 
 // // The following function definitions will be used to prove the lemmas below. 
 
-// function Fib(n: int): int {
-//     if n < 2 then n else Fib(n - 2) + Fib(n - 1)
-//   }
+function Fib(n: int): int {
+    if n < 2 then n else Fib(n - 2) + Fib(n - 1)
+  }
 
-// function Fib3(n: int): int {
-//     if n < 3 then n else Fib3(n - 3) + Fib3(n - 2) + Fib3(n - 1)
-//   }
+function Fib3(n: int): int {
+    if n < 3 then n else Fib3(n - 3) + Fib3(n - 2) + Fib3(n - 1)
+  }
 
-// function Fibly(n: int): int {
-//     if n < 2 then n else Fibly(n - 2) - Fibly(n - 1)
-//   }
+function Fibly(n: int): int {
+    if n < 2 then n else Fibly(n - 2) - Fibly(n - 1)
+  }
 
-// // Function `Pow(n)` computes `2^n` (that is, 2 to the power of `n`).
-// function Pow(n: nat): int
-//   {
-//     if n == 0 then 1 else 2 * Pow(n - 1)
-//   }
+// Function `Pow(n)` computes `2^n` (that is, 2 to the power of `n`).
+function Pow(n: nat): int
+  {
+    if n == 0 then 1 else 2 * Pow(n - 1)
+  }
 
-//   // A quicker way to compute `2^n` squares intermediate results.
-// function FastPow(n: nat): int
-//   {
-//     if n == 0 then
-//       1
-//     else
-//       var half := n / 2;
-//       var p := FastPow(half);
-//       if n % 2 == 0 then
-//         p * p
-//       else
-//         2 * p * p
-//   }
+  // A quicker way to compute `2^n` squares intermediate results.
+function FastPow(n: nat): int
+  {
+    if n == 0 then
+      1
+    else
+      var half := n / 2;
+      var p := FastPow(half);
+      if n % 2 == 0 then
+        p * p
+      else
+        2 * p * p
+  }
 
 // // Use the above functions to prove the lemmas below. 
 
-// lemma {:induction false} Fib3GetsLarger(n: int)
-//     ensures n <= Fib3(n)
+lemma {:induction false} Fib3GetsLarger(n: int)
+    ensures n <= Fib3(n)
+    {
+      //base case
+      if n < 3 {
+        assert n == Fib3(n);
+        assert n == n;
+      } else  {
+        // what I want to prove is n <=Fib3(n)
+        // ih: n -1 <= fib3(n-1) 
+        Fib3GetsLarger(n-1);
+        assert Fib3(n) == Fib3(n - 3) + Fib3(n - 2) + Fib3(n - 1);
+        {Fib3GetsLarger(n - 3); Fib3GetsLarger(n - 2); Fib3GetsLarger(n - 1);}
+        assert Fib3(n - 3) + Fib3(n - 2) + Fib3(n - 1) >= (n-3) + (n-2) + (n -1);
+      }
+    }
 
 // lemma {:induction false} FibFibly(n: nat)
 //     ensures n % 2 == 0 ==> Fib(n) == -Fibly(n)
