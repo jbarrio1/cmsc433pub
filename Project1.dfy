@@ -234,7 +234,7 @@ method SeqToMap(s: seq<int>) returns (m: map<int, int>)
   ensures m is map<int,int>
   decreases |s|  // Termination measure for recursion
 {
-  m := shelper(s,0);
+  return shelper(s,0);
 }
 
 
