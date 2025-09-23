@@ -289,9 +289,11 @@ lemma {:induction false} Fib3GetsLarger(n: int)
       } else  {
         // what I want to prove is n <=Fib3(n)
         // ih: n -1 <= fib3(n-1) 
-        Fib3GetsLarger(n-1);
+
+        Fib3GetsLarger(n-1); // This allows us to say line 294 is true and is our inductive hypo
         assert Fib3(n) == Fib3(n - 3) + Fib3(n - 2) + Fib3(n - 1);
-        {Fib3GetsLarger(n - 3); Fib3GetsLarger(n - 2); Fib3GetsLarger(n - 1);}
+        
+        {Fib3GetsLarger(n - 3); Fib3GetsLarger(n - 2); Fib3GetsLarger(n - 1);} // again using our ih
         assert Fib3(n - 3) + Fib3(n - 2) + Fib3(n - 1) >= (n-3) + (n-2) + (n -1);
       }
     }
@@ -300,8 +302,21 @@ lemma {:induction false} Fib3GetsLarger(n: int)
 //     ensures n % 2 == 0 ==> Fib(n) == -Fibly(n)
 //     ensures n % 2 != 0 ==> Fib(n) == Fibly(n)
 
-// lemma {:induction false} Squaring(m: nat, n: nat)
-//     ensures Pow(m + n) == Pow(m) * Pow(n)
+lemma {:induction false} Squaring(m: nat, n: nat)
+   ensures Pow(m + n) == Pow(m) * Pow(n)
+    {
+      if m  + n == 0 {
+        assert Pow (m + n) == 1;
+        assert Pow(m) * Pow(n) ==1;
+        assert Pow (m) * Pow(n) ==  Pow(m+n);
+      }else if m ==0 || n == 0{
+
+      }else 
+       {
+        Squaring(m-1,n-1);
+        assert Pow(m+n) == 2 * Pow(m+n-1);
+      }
+    }
 
 // lemma {:induction false} FastPowCorrect(n: nat)
 //     ensures Pow(n) == FastPow(n)
