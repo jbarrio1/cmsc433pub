@@ -225,12 +225,13 @@ method Reverse(s: seq<int>) returns (r: seq<int>)
 
 
 function shelper( s: seq<int>, i: int ) :(m:map<int,int>) 
+decreases |s|
 {
   if s == [] then map[] else  map[i := s[0]] + shelper(s[1..],i+1)
 }
 
 method SeqToMap(s: seq<int>) returns (m: map<int, int>)
-  ensures m is map
+  ensures m is map<int,int>
   decreases |s|  // Termination measure for recursion
 {
   m := shelper(s,0);
