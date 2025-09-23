@@ -223,12 +223,18 @@ method Reverse(s: seq<int>) returns (r: seq<int>)
 // // approach similar to findMin and findMax to write the function and its 
 // // ensures statement.
 
-// method SeqToMap(s: seq<int>) returns (m: map<int, int>)
-//   ensures // TODO
-//   decreases |s|  // Termination measure for recursion
-// {
-//   // FILL IN HERE
-// }
+
+function shelper( s: seq<int>, i: int ) :(m:map<int,int>) 
+{
+  if s == [] then map[] else  map[i := s[0]] + shelper(s[1..],i+1)
+}
+
+method SeqToMap(s: seq<int>) returns (m: map<int, int>)
+  ensures m is map
+  decreases |s|  // Termination measure for recursion
+{
+  m := shelper(s,0);
+}
 
 
 
