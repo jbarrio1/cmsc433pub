@@ -69,7 +69,7 @@ function createValuesSet<T>(m: MapSet<T>) : (r:set<T>)
 function size<T> (m:MapSet<T>): int
 {
   // Replace with your definition
-  match m { case MapSet(s) => if s == map[] then 0 else |createValuesSet(m)| }
+ |createValuesSet(m)|
 }
 
 function insert<T> (m:MapSet<T>, x:T): MapSet<T> {
