@@ -66,7 +66,7 @@ function createValuesSet<T>(m: MapSet<T>) : (r:set<T>)
   set x | x in m.s.Keys && m.s[x] == true
 }
 //coming back to this - idea is going to make a new set
-function size<T> (m:MapSet<T>): (r:int)
+function size<T> (m:MapSet<T>): int
 {
   // Replace with your definition
   match m { case MapSet(s) => if s == map[] then 0 else |createValuesSet(m)| }
