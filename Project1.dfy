@@ -61,11 +61,13 @@ predicate member<T> (m:MapSet<T>, x:T) {
   // Replace with your definition
   match m { case MapSet(s) => if x in s then s[x] == true else false}
 }
-function createValuesSet<T>(m: MapSet<T>) : set<T>{
+function createValuesSet<T>(m: MapSet<T>) : (r:set<T>)
+{
   set x | x in m.s.Keys && m.s[x] == true
 }
 //coming back to this - idea is going to make a new set
-function size<T> (m:MapSet<T>): int {
+function size<T> (m:MapSet<T>): (r:int)
+{
   // Replace with your definition
   match m { case MapSet(s) => if s == map[] then 0 else |createValuesSet(m)| }
 }
@@ -300,27 +302,28 @@ lemma {:induction false} Fib3GetsLarger(n: int)
   }
 }
 
-// lemma {:induction false} FibFibly(n: nat)
-//   ensures n % 2 == 0 ==> Fib(n) == -Fibly(n)
-//   ensures n % 2 != 0 ==> Fib(n) == Fibly(n)
-// {
-//   if n < 2 {
-//     assert n == Fib(n);
-//     assert n == Fibly(n);
-//   }else {
-//     FibFibly(n-1);
+lemma {:induction false} FibFibly(n: nat)
+  ensures n % 2 == 0 ==> Fib(n) == -Fibly(n)
+  ensures n % 2 != 0 ==> Fib(n) == Fibly(n)
+{
+  if n < 2 {
+    assert n == Fib(n);
+    assert n == Fibly(n);
+  }else {
+    FibFibly(n-1);
+    assert Fib(n) == Fib(n - 2) + Fib(n - 1);
+    if n % 2 == 0 {
+      {FibFibly(n-2); FibFibly(n-1);}
+      assert Fib(n - 2) + Fib(n - 1) == -Fibly(n-2) + Fibly(n-1);
 
-//     if n % 2 == 0 {
-//       assert Fib(n) == Fib(n - 2) + Fib(n - 1);
-//       {FibFibly(n-2); FibFibly(n-1);}  
-//       assert Fib(n-2) + Fib(n-1 ) == (n-2) + (n-1);
+    }else {
+      {FibFibly(n-2); FibFibly(n-1);}
+      assert Fib(n - 2) + Fib(n - 1) == Fibly(n-2) - Fibly(n-1);
 
-//         }else {
+    }
+  }
 
-//     }
-//   }
-
-//}
+}
 
 lemma {:induction false} Squaring(m: nat, n: nat)
   ensures Pow(m + n) == Pow(m) * Pow(n)
